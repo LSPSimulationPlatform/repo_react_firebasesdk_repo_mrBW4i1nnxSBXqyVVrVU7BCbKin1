@@ -51,7 +51,7 @@ const HomeContent = ({ navigate, features }: {navigate: any, features: any}) => 
         {/* Features grid section */}
         <Row gutter={[32, 32]}>
           {/* Mapping through the features array and displaying each feature in a column */}
-          {features.map((feature:any, index:any) => (
+          {features.map((feature: any, index:any) => (
             <Col xs={24} sm={12} lg={6} key={index}>
               {/* Card for each feature with hover shadow animation */}
               <Card className="h-full text-center hover:shadow-lg transition-shadow">
