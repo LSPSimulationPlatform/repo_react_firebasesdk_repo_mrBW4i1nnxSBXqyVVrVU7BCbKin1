@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 // Import Firebase Firestore methods for querying, listening, and deleting data
 import { collection, query, where, onSnapshot, deleteDoc, doc, getDocs } from 'firebase/firestore';
 // Import Firestore database instance
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 // Import Ant Design message for notifications
 import { message } from 'antd';
 

@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import Navbar from '../components/Navbar';
 
 // Import custom hook for dashboard logic (userProfile, navigation, quick actions)
-import useDashBoard from '../hooks/useDashBoard';
+import useDashBoard from '../hooks/useDashboard';
 
 // Import main dashboard content component
 import DashBoardContent from '../components/DashBoardContent';
