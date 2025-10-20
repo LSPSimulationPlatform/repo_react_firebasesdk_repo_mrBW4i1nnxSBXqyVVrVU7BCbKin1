@@ -1,7 +1,6 @@
 // Import necessary React and Firebase tools
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { 
-  User, // Firebase User type
   onAuthStateChanged, // Listener for authentication state changes
   signInWithEmailAndPassword, // Email/password login
   createUserWithEmailAndPassword, // Email/password registration
@@ -24,7 +23,7 @@ interface UserProfile {
 
 // Define the structure of the authentication context
 interface AuthContextType {
-  user: User | null; // Firebase user
+  user: null; // Firebase user
   userProfile: UserProfile | null; // Firestore user profile
   loading: boolean; // Loading state while checking auth
   login: (email: string, password: string) => Promise<void>;
@@ -47,9 +46,9 @@ export const useAuth = () => {
 };
 
 // Provider component that wraps the entire app and provides auth state
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: any }) => {
   // States for Firebase user, Firestore profile, and loading indicator
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
