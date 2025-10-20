@@ -1,6 +1,6 @@
 // Import necessary React and Firebase tools
 import { createContext, useContext, useEffect, useState } from 'react';
-import { 
+import {
   onAuthStateChanged, // Listener for authentication state changes
   signInWithEmailAndPassword, // Email/password login
   createUserWithEmailAndPassword, // Email/password registration
@@ -23,7 +23,7 @@ interface UserProfile {
 
 // Define the structure of the authentication context
 interface AuthContextType {
-  user: null; // Firebase user
+  user: null | { uid: any }; // Firebase user
   userProfile: UserProfile | null; // Firestore user profile
   loading: boolean; // Loading state while checking auth
   login: (email: string, password: string) => Promise<void>;
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
   // Check if a user is logged in (runs when app loads or auth changes)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user); // Set Firebase user
+      setUser(user as any); // Set Firebase user
 
       if (user) {
         // Get user profile from Firestore
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     try {
       // Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
+
       // Save user info in Firestore
       await setDoc(doc(db, 'usersData', userCredential.user.uid), {
         uid: userCredential.user.uid,
@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         role: 'user',
         createdAt: new Date()
       });
-      
+
       message.success('Registration successful!');
     } catch (error: any) {
       message.error(error.message || 'Registration failed');
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider); // Open Google login popup
-      
+
       // Check if user already exists in Firestore
       const userDoc = await getDoc(doc(db, 'usersData', result.user.uid));
       if (!userDoc.exists()) {
@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
           createdAt: new Date()
         });
       }
-      
+
       message.success('Login successful!');
     } catch (error: any) {
       message.error(error.message || 'Google login failed');
